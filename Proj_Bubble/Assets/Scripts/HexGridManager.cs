@@ -14,9 +14,7 @@ public class HexGridManager : MonoBehaviour
 
     public HexNode[,] Nodes;
     
-    
-
-    private void Start()
+    private void Awake()
     {
         CreateGrid();
     }
@@ -31,7 +29,7 @@ public class HexGridManager : MonoBehaviour
             {
                 HexNode newNode = new HexNode(x,y);
                 Nodes[x, y] = newNode;
-                GameObject go = new GameObject("Node : "+x + " ," + y); //GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                GameObject go = new GameObject("Node : "+x + ", " + y); //GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 go.transform.parent = this.transform;
                 if (y % 2 == 1)
                 {
@@ -41,8 +39,7 @@ public class HexGridManager : MonoBehaviour
                 {
                     go.transform.position = new Vector3(x,y,0);
                 }
-                Debug.Log("node " +x+ " ," +y+ " has this many neighbours --> " +newNode.GetNeighbours().Count);
-
+                //Debug.Log("node " +x+ " ," +y+ " has this many neighbours --> " +newNode.GetNeighbours().Count);
             }
         }
     }

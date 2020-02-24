@@ -213,6 +213,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1163707063}
+  - component: {fileID: 1163707065}
   - component: {fileID: 1163707064}
   m_Layer: 0
   m_Name: GridManager
@@ -247,6 +248,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8bcce9bafa1d0e45ba6ba4d35e6adab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  height: 9
-  width: 6
   radialOffest: 0.5
+--- !u!114 &1163707065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163707062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f7cd925c523431468886a041fbb621c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
