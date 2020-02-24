@@ -6,9 +6,9 @@ using UnityEngine;
 public class HexGridManager : MonoBehaviour
 {
     [SerializeField]
-    private int height = 9;
+    public static int height = 9;
     [SerializeField]
-    private int width = 6;
+    public static int width = 6;
 
     [SerializeField] private float radialOffest = .5f;
 
@@ -36,13 +36,13 @@ public class HexGridManager : MonoBehaviour
                 if (y % 2 == 1)
                 {
                     go.transform.position = new Vector3(x + radialOffest,y,0);
-                    Debug.Log("Here");
                 }
                 else
                 {
                     go.transform.position = new Vector3(x,y,0);
                 }
-                
+                Debug.Log("node " +x+ " ," +y+ " has this many neighbours --> " +newNode.GetNeighbours().Count);
+
             }
         }
     }

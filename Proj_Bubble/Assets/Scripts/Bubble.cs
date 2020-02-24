@@ -10,13 +10,13 @@ public class Bubble : MonoBehaviour, IBubble
     public Color BubbleColor => _bubbleData.BubbleColor;
     public int BubbleNumber => _bubbleData.BubbleNumber;
 
-//    private GridNode _currentNode;
-//   
-//    public GridNode CurrentNode
-//    {
-//        get => _currentNode;
-//        set => _currentNode = value;
-//    }
+    private HexNode _currentNode;
+   
+    public HexNode CurrentNode
+    {
+        get => _currentNode;
+        set => _currentNode = value;
+    }
    
     [SerializeField]
     private TextMeshProUGUI numberText;
