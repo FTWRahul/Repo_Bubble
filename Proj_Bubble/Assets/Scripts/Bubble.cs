@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -21,7 +22,8 @@ public class Bubble : MonoBehaviour, IBubble
     [SerializeField]
     private TextMeshProUGUI numberText;
 
-
+    public List<Vector3> NeighbourTransformsPositions = new List<Vector3>();
+    
     public void Init(BubbleSO bubbleData)
     {
         _bubbleData = bubbleData;
@@ -31,7 +33,7 @@ public class Bubble : MonoBehaviour, IBubble
     
     private void SetColor()
     {
-        GetComponent<SpriteRenderer>().material.color = _bubbleData.BubbleColor;
+        GetComponent<SpriteRenderer>().color = _bubbleData.BubbleColor;
     }
 
     private void SetNumber()
@@ -51,6 +53,10 @@ public class Bubble : MonoBehaviour, IBubble
 
     public void GetNeighbour()
     {
-        throw new System.NotImplementedException();
+       List<Vector2Int> neighbours = _currentNode.GetNeighbours();
+       foreach (var n in neighbours)
+       {
+           Debug.Log("Neighbours are :  "+n.x + " : " + n.y);
+       }
     }
 }

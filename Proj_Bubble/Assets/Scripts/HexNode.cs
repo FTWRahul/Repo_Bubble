@@ -6,6 +6,9 @@ public struct HexNode
 {
    private readonly int _x;
    private readonly int _y;
+
+   public int X => _x;
+   public int Y => _y;
    private List<Vector2Int> _neighbourList;
 
    public HexNode(int x, int y)

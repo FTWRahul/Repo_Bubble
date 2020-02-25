@@ -1,4 +1,6 @@
-﻿public interface IBubble
+﻿using UnityEngine;
+
+public interface IBubble
 {
     void Init(BubbleSO bubbleData);
     void Merge();

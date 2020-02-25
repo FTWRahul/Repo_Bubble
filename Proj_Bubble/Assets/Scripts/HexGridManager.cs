@@ -13,6 +13,7 @@ public class HexGridManager : MonoBehaviour
     [SerializeField] private float radialOffest = .5f;
 
     public HexNode[,] Nodes;
+    public WorldNode[,] worldNodes;
     
     private void Awake()
     {
@@ -21,14 +22,13 @@ public class HexGridManager : MonoBehaviour
 
     public void CreateGrid()
     {
-        Nodes = new HexNode[width,height];
+        Nodes = new HexNode[width, height];
+        worldNodes = new WorldNode[width, height];
 
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                HexNode newNode = new HexNode(x,y);
-                Nodes[x, y] = newNode;
                 GameObject go = new GameObject("Node : "+x + ", " + y); //GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 go.transform.parent = this.transform;
                 if (y % 2 == 1)
@@ -39,6 +39,11 @@ public class HexGridManager : MonoBehaviour
                 {
                     go.transform.position = new Vector3(x,y,0);
                 }
+
+                worldNodes[x, y] = go.AddComponent<WorldNode>();
+                HexNode newNode = new HexNode(x,y);
+                Nodes[x, y] = newNode;
+                worldNodes[x, y].hexNode = newNode;
                 //Debug.Log("node " +x+ " ," +y+ " has this many neighbours --> " +newNode.GetNeighbours().Count);
             }
         }
