@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1be0b939546593543b8222fddbcd8361, type: 3}
-  m_Name: Bubble 256
+  m_Name: Bubble 2
   m_EditorClassIdentifier: 
-  bubbleColor: {r: 0.42745098, g: 0.5647059, b: 0.88235295, a: 1}
-  bubbleNumber: 256
-  displayText: 256
+  bubbleColor: {r: 0.9254902, g: 0.39607844, b: 0.5568628, a: 0}
+  bubbleNumber: 2
+  displayText: 2

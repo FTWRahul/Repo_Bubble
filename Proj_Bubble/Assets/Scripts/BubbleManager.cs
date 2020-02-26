@@ -12,7 +12,7 @@ public class BubbleManager : MonoBehaviour
 
     private BubbleSO[] _bubbleSOs;
 
-    private Dictionary<HexNode, Bubble> _bubbles = new Dictionary<HexNode, Bubble>();
+    private Dictionary<HexNode, IBubble> _bubbles = new Dictionary<HexNode, IBubble>();
 
     public GameObject bubblePrefab;
 
@@ -31,7 +31,7 @@ public class BubbleManager : MonoBehaviour
 
         _gridManager = GetComponent<HexGridManager>();
 
-        _bubbleSOs = Resources.LoadAll<BubbleSO>("SoAssets");
+        _bubbleSOs = Resources.LoadAll<BubbleSO>("SoAssets/RegularBubbles");
         //if (_bubbleSOs != null) Debug.Log(_bubbleSOs.Length);
     }
 
@@ -51,9 +51,14 @@ public class BubbleManager : MonoBehaviour
         }
     }
 
-    public Bubble GetBubble(int x, int y)
+    public IBubble GetBubble(int x, int y)
     {
         return _bubbles[_gridManager.Nodes[x, y]];
+    }
+
+    public Vector3 WorldNodePos(int x, int y)
+    {
+        return _gridManager.worldNodes[x, y].transform.position;
     }
 
     [ContextMenu("Create entire grid")]

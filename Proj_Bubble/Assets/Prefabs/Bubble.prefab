@@ -497,6 +497,7 @@ GameObject:
   - component: {fileID: 8453454330415306829}
   - component: {fileID: 8453454330415306828}
   - component: {fileID: 281947490245728601}
+  - component: {fileID: 1803586707690784813}
   - component: {fileID: 2734361992518288886}
   m_Layer: 0
   m_Name: Bubble
@@ -596,6 +597,18 @@ MonoBehaviour:
   - {x: 1, y: 0, z: 0}
   - {x: -0.49999997, y: -1, z: 0}
   - {x: 0.49999997, y: -1, z: 0}
+--- !u!114 &1803586707690784813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8453454330415306831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b93ba22c7439437409b5baeb4af0e006, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!58 &2734361992518288886
 CircleCollider2D:
   m_ObjectHideFlags: 0

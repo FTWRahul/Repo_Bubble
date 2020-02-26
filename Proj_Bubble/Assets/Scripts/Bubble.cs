@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+[RequireComponent(typeof(BubbleTweener))]
 public class Bubble : MonoBehaviour, IBubble
 {
     private BubbleSO _bubbleData;
@@ -55,10 +56,30 @@ public class Bubble : MonoBehaviour, IBubble
     public void GetNeighbour()
     {
        List<Vector2Int> neighbours = _currentNode.GetNeighbours();
-       Debug.Log("For Node------> " +_currentNode.X+" : "+_currentNode.Y);
-       foreach (var n in neighbours)
+       
+       //Debug.Log("For Node------> " +_currentNode.X+" : "+_currentNode.Y);
+       foreach (var neighbour in neighbours)
        {
-           Debug.Log("Neighbours are :  "+n.x + " : " + n.y);
+           //Debug.Log("Neighbours are :  "+neighbour.x + " : " + neighbour.y);
+           
        }
+    }
+
+    public Vector2Int GetNearestAvailableNeighbour(Vector2 from)
+    {
+        List<Vector2Int> neighbours = _currentNode.GetNeighbours();
+        Debug.Log(_currentNode.X + "  " +_currentNode.Y);
+        Vector2Int nearest = new Vector2Int();
+        float distanceThreshold = Mathf.Infinity;
+        foreach (Vector2Int neighbour in neighbours)
+        {
+           float current = Vector3.Distance(BubbleManager.Instance.WorldNodePos(neighbour.x, neighbour.y), transform.position);
+           if (current < distanceThreshold)
+           {
+               nearest = neighbour;
+           }
+        }
+        Debug.Log("Nearest Neighbour is :" + nearest);
+        return nearest;
     }
 }
