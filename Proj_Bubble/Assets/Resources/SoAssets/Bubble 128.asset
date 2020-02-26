@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be0b939546593543b8222fddbcd8361, type: 3}
   m_Name: Bubble 128
   m_EditorClassIdentifier: 
-  bubbleColor: {r: 0.9589885, g: 0.99215686, b: 0, a: 1}
+  bubbleColor: {r: 0.41568628, g: 0.7411765, b: 0.9098039, a: 1}
   bubbleNumber: 128
+  displayText: 128

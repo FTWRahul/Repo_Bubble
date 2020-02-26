@@ -7,8 +7,12 @@ public class BubbleSO : ScriptableObject
     private Color bubbleColor;
     [SerializeField]
     private int bubbleNumber;
+    [SerializeField]
+    private string displayText;
     
     public Color BubbleColor => bubbleColor;
     
     public int BubbleNumber => bubbleNumber;
+
+    public string DisplayText => displayText;
 }

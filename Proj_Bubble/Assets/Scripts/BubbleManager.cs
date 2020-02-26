@@ -56,12 +56,16 @@ public class BubbleManager : MonoBehaviour
         return _bubbles[_gridManager.Nodes[x, y]];
     }
 
+    [ContextMenu("Create entire grid")]
     public void CreateBubble()
     {
         foreach (var worldNode in _gridManager.worldNodes)
         {
-            var worldNodePosition = worldNode.transform.position;
-            Instantiate(bubblePrefab, new Vector3(worldNodePosition.x, worldNodePosition.y, 0), Quaternion.identity);
+            Bubble go = Instantiate(bubblePrefab, new Vector3(worldNode.transform.position.x, worldNode.transform.position.y, 0), Quaternion.identity).GetComponent<Bubble>();
+            go.Init(_bubbleSOs[Random.Range(0, _bubbleSOs.Length)]);
+            _bubbles[_gridManager.Nodes[worldNode.hexNode.X, worldNode.hexNode.Y]] = go;
+            go.CurrentNode = _gridManager.Nodes[worldNode.hexNode.X, worldNode.hexNode.Y];
+            go.GetNeighbour();
         }
     }
 
@@ -76,6 +80,7 @@ public class BubbleManager : MonoBehaviour
             go.Init(_bubbleSOs[Random.Range(0, _bubbleSOs.Length)]);
             _bubbles[_gridManager.Nodes[i, heightCounter]] = go;
             go.CurrentNode = _gridManager.Nodes[i, heightCounter];
+            go.GetNeighbour();
         }
 
         heightCounter--;

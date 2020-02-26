@@ -11,15 +11,15 @@ public struct HexNode
    public int Y => _y;
    private List<Vector2Int> _neighbourList;
 
-   public HexNode(int x, int y)
+   public HexNode(int x, int y, bool offest)
    {
       _x = x;
       _y = y;
       _neighbourList = new List<Vector2Int>();
-      GenerateNeighbours();
+      GenerateNeighbours(offest);
    }
 
-   private void GenerateNeighbours()
+   private void GenerateNeighbours(bool _hasOffest)
    {
       if (_y < HexGridManager.height - 1)
       {
@@ -37,13 +37,28 @@ public struct HexNode
       {
          _neighbourList.Add(new Vector2Int(_x + 1, _y));
       }
-      if (_y < HexGridManager.height - 1 && _x < HexGridManager.width - 1)
+
+      if (_hasOffest)
       {
-         _neighbourList.Add(new Vector2Int(_x + 1, _y + 1));
+         if (_y < HexGridManager.height - 1 && _x < HexGridManager.width - 1)
+         {
+            _neighbourList.Add(new Vector2Int(_x + 1, _y + 1));
+         }
+         if (_y != 0 && _x < HexGridManager.width - 1)
+         {
+            _neighbourList.Add(new Vector2Int(_x + 1, _y - 1));
+         }
       }
-      if (_y != 0 && _x != 0)
+      else
       {
-         _neighbourList.Add(new Vector2Int(_x - 1, _y - 1));
+         if (_y < HexGridManager.height - 1 && _x != 0)
+         {
+            _neighbourList.Add(new Vector2Int(_x - 1, _y + 1));
+         }
+         if(_y !=0 &&  _x != 0)
+         {
+            _neighbourList.Add(new Vector2Int(_x - 1, _y - 1));
+         }
       }
    }
 

@@ -10,6 +10,7 @@ public class Bubble : MonoBehaviour, IBubble
 
     public Color BubbleColor => _bubbleData.BubbleColor;
     public int BubbleNumber => _bubbleData.BubbleNumber;
+    public string bubbleText => _bubbleData.DisplayText;
 
     private HexNode _currentNode;
    
@@ -35,10 +36,9 @@ public class Bubble : MonoBehaviour, IBubble
     {
         GetComponent<SpriteRenderer>().color = _bubbleData.BubbleColor;
     }
-
     private void SetNumber()
     {
-        numberText.text = _bubbleData.BubbleNumber.ToString();
+        numberText.text = _bubbleData.DisplayText;
     }
 
     public void Merge()
@@ -51,9 +51,11 @@ public class Bubble : MonoBehaviour, IBubble
         throw new System.NotImplementedException();
     }
 
+    [ContextMenu("TELL ME YOUR NEIGHBOURS NOW!")]
     public void GetNeighbour()
     {
        List<Vector2Int> neighbours = _currentNode.GetNeighbours();
+       Debug.Log("For Node------> " +_currentNode.X+" : "+_currentNode.Y);
        foreach (var n in neighbours)
        {
            Debug.Log("Neighbours are :  "+n.x + " : " + n.y);

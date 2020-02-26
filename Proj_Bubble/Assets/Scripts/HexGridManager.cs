@@ -29,11 +29,13 @@ public class HexGridManager : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
+                bool offset = false;
                 GameObject go = new GameObject("Node : "+x + ", " + y); //GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 go.transform.parent = this.transform;
                 if (y % 2 == 1)
                 {
                     go.transform.position = new Vector3(x + radialOffest,y,0);
+                    offset = true;
                 }
                 else
                 {
@@ -41,7 +43,7 @@ public class HexGridManager : MonoBehaviour
                 }
 
                 worldNodes[x, y] = go.AddComponent<WorldNode>();
-                HexNode newNode = new HexNode(x,y);
+                HexNode newNode = new HexNode(x,y, offset);
                 Nodes[x, y] = newNode;
                 worldNodes[x, y].hexNode = newNode;
                 //Debug.Log("node " +x+ " ," +y+ " has this many neighbours --> " +newNode.GetNeighbours().Count);
