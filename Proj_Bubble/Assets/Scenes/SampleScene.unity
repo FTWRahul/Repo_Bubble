@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 627441869}
   - component: {fileID: 627441868}
   - component: {fileID: 627441867}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -508,8 +508,13 @@ PrefabInstance:
     - target: {fileID: 8453454330415306828, guid: 8d7500ee2ae3e00458b0533bcc8dd333,
         type: 3}
       propertyPath: m_Color.b
-      value: 0.5004897
+      value: 0.50196075
       objectReference: {fileID: 0}
+    - target: {fileID: 8453454330415306828, guid: 8d7500ee2ae3e00458b0533bcc8dd333,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 8453454330415306829, guid: 8d7500ee2ae3e00458b0533bcc8dd333,
         type: 3}
       propertyPath: m_LocalPosition.x

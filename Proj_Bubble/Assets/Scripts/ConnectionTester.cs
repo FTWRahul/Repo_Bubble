@@ -15,7 +15,7 @@ public class ConnectionTester : MonoBehaviour
             {
                 if (hit.transform.CompareTag("Bubble"))
                 {
-                    hit.transform.GetComponent<IBubble>().GetNeighbour();
+                    hit.transform.GetComponent<IBubble>().CheckNeighbours();
                 }
             }
         }

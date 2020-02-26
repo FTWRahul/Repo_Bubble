@@ -17,13 +17,13 @@ public class BubbleShooter : MonoBehaviour
             RaycastHit hit;
             if(Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                RaycastHit2D hit2D = Physics2D.Raycast(currentBubble.transform.position, hit.point, Mathf.Infinity);
+                Debug.Log("HIT" + hit.transform.name);
+                RaycastHit2D hit2D = Physics2D.Raycast(currentBubble.transform.position,  Input.mousePosition, Mathf.Infinity);
                 if (hit2D.transform.GetComponent<IBubble>() != null)
                 {
                     hit2D.transform.GetComponent<IBubble>().GetNearestAvailableNeighbour(hit2D.point);
                 }
             }
-            
         }
     }
 

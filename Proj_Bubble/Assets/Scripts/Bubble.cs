@@ -8,11 +8,7 @@ using TMPro;
 public class Bubble : MonoBehaviour, IBubble
 {
     private BubbleSO _bubbleData;
-
-    public Color BubbleColor => _bubbleData.BubbleColor;
-    public int BubbleNumber => _bubbleData.BubbleNumber;
-    public string bubbleText => _bubbleData.DisplayText;
-
+    
     private HexNode _currentNode;
    
     public HexNode CurrentNode
@@ -42,9 +38,15 @@ public class Bubble : MonoBehaviour, IBubble
         numberText.text = _bubbleData.DisplayText;
     }
 
-    public void Merge()
+    public void StartMerge()
     {
-        throw new System.NotImplementedException();
+        MergeHandeler mergeHandeler = new MergeHandeler(this);
+        mergeHandeler.StartCheck();
+    }
+
+    public void Merge(IBubble bubble)
+    {
+        throw new NotImplementedException();
     }
 
     public void Pop()
@@ -53,16 +55,25 @@ public class Bubble : MonoBehaviour, IBubble
     }
 
     [ContextMenu("TELL ME YOUR NEIGHBOURS NOW!")]
-    public void GetNeighbour()
+    public List<IBubble> CheckNeighbours()
     {
        List<Vector2Int> neighbours = _currentNode.GetNeighbours();
        
        //Debug.Log("For Node------> " +_currentNode.X+" : "+_currentNode.Y);
+       List<IBubble> returnList = new List<IBubble>();
        foreach (var neighbour in neighbours)
        {
            //Debug.Log("Neighbours are :  "+neighbour.x + " : " + neighbour.y);
-           
+           var current = BubbleManager.Instance.GetBubble(neighbour.x, neighbour.y);
+           if (current != null)
+           {
+               if (current.BubbleNumber() == _bubbleData.BubbleNumber)
+               {
+                   returnList.Add(current);
+               }
+           }
        }
+       return returnList;
     }
 
     public Vector2Int GetNearestAvailableNeighbour(Vector2 from)
@@ -81,5 +92,10 @@ public class Bubble : MonoBehaviour, IBubble
         }
         Debug.Log("Nearest Neighbour is :" + nearest);
         return nearest;
+    }
+
+    public int BubbleNumber()
+    {
+        return _bubbleData.BubbleNumber;
     }
 }

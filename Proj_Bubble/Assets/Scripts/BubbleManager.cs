@@ -70,7 +70,7 @@ public class BubbleManager : MonoBehaviour
             go.Init(_bubbleSOs[Random.Range(0, _bubbleSOs.Length)]);
             _bubbles[_gridManager.Nodes[worldNode.hexNode.X, worldNode.hexNode.Y]] = go;
             go.CurrentNode = _gridManager.Nodes[worldNode.hexNode.X, worldNode.hexNode.Y];
-            go.GetNeighbour();
+            go.CheckNeighbours();
         }
     }
 
@@ -85,7 +85,7 @@ public class BubbleManager : MonoBehaviour
             go.Init(_bubbleSOs[Random.Range(0, _bubbleSOs.Length)]);
             _bubbles[_gridManager.Nodes[i, heightCounter]] = go;
             go.CurrentNode = _gridManager.Nodes[i, heightCounter];
-            go.GetNeighbour();
+            go.CheckNeighbours();
         }
 
         heightCounter--;
