@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
+
 
 public class MergeHandeler
 {
@@ -50,7 +52,16 @@ public class MergeHandeler
             _checkedBubbles.Add(_unCheckedBubbles[i]);
         }
 
-        List<IBubble> tempUnchecked = _unCheckedBubbles;
+        UpdateUncheckList(_unCheckedBubbles);
+    }
+
+    private void UpdateUncheckList(List<IBubble> toCheck)
+    {
+        List<IBubble> tempUnchecked = new List<IBubble>();
+        foreach (var unChecked in _unCheckedBubbles)
+        {
+            tempUnchecked.Add(unChecked);
+        }
         foreach (var unChecked in tempUnchecked)
         {
             if (_checkedBubbles.Contains(unChecked))
@@ -58,7 +69,7 @@ public class MergeHandeler
                 _unCheckedBubbles.Remove(unChecked);
             }
         }
-
+        
         if (_unCheckedBubbles.Count > 0)
         {
             CheckNeighbourBubble();
@@ -71,10 +82,46 @@ public class MergeHandeler
 
     private void FindResult()
     {
+        List<IBubble> tempUnchecked = new List<IBubble>();
+
         _mergeResult = _invoker.BubbleNumber();
         for (int i = 0; i < _checkedBubbles.Count - 1; i++)
         {
             _mergeResult += _mergeResult;
         }
+
+        List<IBubble> finalList = new List<IBubble>();
+        foreach (var bubble in _checkedBubbles)
+        {
+            finalList = bubble.CheckNeighboursOfNumber(_mergeResult);
+            if (finalList != null)
+            {
+                MergeAndCreateNew(bubble);
+                break;
+            }
+        }
+
+        if (finalList.Count < 1)
+        {
+            MergeAndCreateNew(_invoker);
+        }
+    }
+
+    private void MergeAndCreateNew(IBubble inBubble)
+    {
+        foreach (var bubble in _checkedBubbles)
+        {
+            bubble.Merge(inBubble);
+        }
+
+        BubbleManager.Instance.CreateBubble(inBubble.BubbleCoordinate().x, inBubble.BubbleCoordinate().y, _mergeResult);
+        StartAfterDelay(inBubble);
+    }
+
+    private async void StartAfterDelay(IBubble inBubble)
+    {
+        await Task.Delay(300);
+        BubbleManager.Instance.GetBubble(inBubble.BubbleCoordinate().x, inBubble.BubbleCoordinate().y).StartMerge();
+
     }
 }

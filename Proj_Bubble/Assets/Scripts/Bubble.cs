@@ -38,6 +38,7 @@ public class Bubble : MonoBehaviour, IBubble
         numberText.text = _bubbleData.DisplayText;
     }
 
+    [ContextMenu("Try Merging for me will ya?")]
     public void StartMerge()
     {
         MergeHandeler mergeHandeler = new MergeHandeler(this);
@@ -46,7 +47,13 @@ public class Bubble : MonoBehaviour, IBubble
 
     public void Merge(IBubble bubble)
     {
-        throw new NotImplementedException();
+        //ClearNode();
+        GetComponent<BubbleTweener>().MergeIntoOther(bubble.BubbleTransform().position);
+    }
+
+    private void ClearNode()
+    {
+        BubbleManager.Instance.ClearNode(_currentNode.X, _currentNode.Y);
     }
 
     public void Pop()
@@ -57,23 +64,35 @@ public class Bubble : MonoBehaviour, IBubble
     [ContextMenu("TELL ME YOUR NEIGHBOURS NOW!")]
     public List<IBubble> CheckNeighbours()
     {
-       List<Vector2Int> neighbours = _currentNode.GetNeighbours();
-       
-       //Debug.Log("For Node------> " +_currentNode.X+" : "+_currentNode.Y);
-       List<IBubble> returnList = new List<IBubble>();
-       foreach (var neighbour in neighbours)
-       {
-           //Debug.Log("Neighbours are :  "+neighbour.x + " : " + neighbour.y);
-           var current = BubbleManager.Instance.GetBubble(neighbour.x, neighbour.y);
-           if (current != null)
-           {
-               if (current.BubbleNumber() == _bubbleData.BubbleNumber)
-               {
-                   returnList.Add(current);
-               }
-           }
-       }
-       return returnList;
+        return ReturnListOfNeighbours(_bubbleData.BubbleNumber);
+    }
+
+    public List<IBubble> CheckNeighboursOfNumber(int number)
+    {
+        return ReturnListOfNeighbours(number);
+    }
+
+    private List<IBubble> ReturnListOfNeighbours(int number)
+    {
+        List<Vector2Int> neighbours = _currentNode.GetNeighbours();
+
+        List<IBubble> returnList = new List<IBubble>();
+        foreach (var neighbour in neighbours)
+        {
+            if (neighbour != null)
+            {
+                var current = BubbleManager.Instance.GetBubble(neighbour.x, neighbour.y);
+                if (current != null)
+                {
+                    if (current.BubbleNumber() == number)
+                    {
+                        returnList.Add(current);
+                    }
+                }
+            }
+        }
+
+        return returnList;
     }
 
     public Vector2Int GetNearestAvailableNeighbour(Vector2 from)
@@ -97,5 +116,15 @@ public class Bubble : MonoBehaviour, IBubble
     public int BubbleNumber()
     {
         return _bubbleData.BubbleNumber;
+    }
+
+    public Transform BubbleTransform()
+    {
+        return transform;
+    }
+
+    public Vector2Int BubbleCoordinate()
+    {
+        return new Vector2Int(_currentNode.X, _currentNode.Y);
     }
 }

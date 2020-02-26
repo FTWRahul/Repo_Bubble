@@ -26,4 +26,24 @@ public class BubbleTweener : MonoBehaviour
         GetComponent<SpriteRenderer>().DOColor(colour, randomGrowthDelay).SetEase(Ease.Linear);
         transform.DOScale(origianlScale, randomGrowthDelay).SetEase(Ease.InOutQuart);
     }
+
+    public void MergeIntoOther(Vector3 bubblePosition)
+    {
+        StartCoroutine(MergeAndPop(bubblePosition));
+    }
+
+    private IEnumerator MergeAndPop(Vector3 bubblePosition)
+    {
+        transform.DOMove(bubblePosition, .2f).SetEase(Ease.InQuart);
+        var colour = GetComponent<SpriteRenderer>().color;
+        colour.a = .5f;
+        GetComponent<SpriteRenderer>().color = colour;
+        yield return new WaitForSeconds(.2f);
+        Destroy(this.gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        AudioManager.instance.PlayPopSound();
+    }
 }

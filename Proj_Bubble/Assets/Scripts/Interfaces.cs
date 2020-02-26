@@ -9,7 +9,12 @@ public interface IBubble
     void Merge(IBubble bubble);
     void Pop();
     List<IBubble> CheckNeighbours();
+    List<IBubble> CheckNeighboursOfNumber(int number);
     Vector2Int GetNearestAvailableNeighbour(Vector2 from);
 
     int BubbleNumber();
+
+    Transform BubbleTransform();
+
+    Vector2Int BubbleCoordinate();
 }

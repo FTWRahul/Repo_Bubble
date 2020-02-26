@@ -13,6 +13,7 @@ public class BubbleManager : MonoBehaviour
     private BubbleSO[] _bubbleSOs;
 
     private Dictionary<HexNode, IBubble> _bubbles = new Dictionary<HexNode, IBubble>();
+    public Dictionary<int, BubbleSO> bubbleDataDictionary = new Dictionary<int, BubbleSO>();
 
     public GameObject bubblePrefab;
 
@@ -38,6 +39,9 @@ public class BubbleManager : MonoBehaviour
     private void Start()
     {
         InitializeDictionary();
+        CreateBubbleRow();
+        CreateBubbleRow();
+        CreateBubbleRow();
     }
 
     private void InitializeDictionary()
@@ -49,6 +53,14 @@ public class BubbleManager : MonoBehaviour
                 _bubbles.Add(node, null);
             }
         }
+
+        foreach (var bData in _bubbleSOs)
+        {
+            if (!bubbleDataDictionary.ContainsKey(bData.BubbleNumber))
+            {
+                bubbleDataDictionary.Add(bData.BubbleNumber, bData);
+            }
+        }
     }
 
     public IBubble GetBubble(int x, int y)
@@ -56,22 +68,24 @@ public class BubbleManager : MonoBehaviour
         return _bubbles[_gridManager.Nodes[x, y]];
     }
 
+    public void ClearNode(int x, int y)
+    {
+        _bubbles[_gridManager.Nodes[x, y]] = null;
+    }
+
     public Vector3 WorldNodePos(int x, int y)
     {
         return _gridManager.worldNodes[x, y].transform.position;
     }
 
-    [ContextMenu("Create entire grid")]
-    public void CreateBubble()
+    public void CreateBubble(int x , int y, int data)
     {
-        foreach (var worldNode in _gridManager.worldNodes)
-        {
-            Bubble go = Instantiate(bubblePrefab, new Vector3(worldNode.transform.position.x, worldNode.transform.position.y, 0), Quaternion.identity).GetComponent<Bubble>();
-            go.Init(_bubbleSOs[Random.Range(0, _bubbleSOs.Length)]);
-            _bubbles[_gridManager.Nodes[worldNode.hexNode.X, worldNode.hexNode.Y]] = go;
-            go.CurrentNode = _gridManager.Nodes[worldNode.hexNode.X, worldNode.hexNode.Y];
-            go.CheckNeighbours();
-        }
+        var worldNode = _gridManager.worldNodes[x, y];
+        Bubble go = Instantiate(bubblePrefab, new Vector3(worldNode.transform.position.x, worldNode.transform.position.y, 0), Quaternion.identity).GetComponent<Bubble>();
+        Debug.Log("Data requested for number  " + data);
+        go.Init(GetBubbleData(data));
+        _bubbles[_gridManager.Nodes[x, y]] = go;
+        go.CurrentNode = _gridManager.Nodes[x, y];
     }
 
     [ContextMenu("CreateRow")]
@@ -89,6 +103,11 @@ public class BubbleManager : MonoBehaviour
         }
 
         heightCounter--;
+    }
+
+    public BubbleSO GetBubbleData(int bubbleData)
+    {
+        return bubbleDataDictionary[bubbleData];
     }
 
     public void PushAllDown()
