@@ -17,4 +17,6 @@ public interface IBubble
     Transform BubbleTransform();
 
     Vector2Int BubbleCoordinate();
+
+    void ClearNode();
 }

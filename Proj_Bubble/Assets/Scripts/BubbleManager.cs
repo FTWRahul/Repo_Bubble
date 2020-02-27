@@ -42,6 +42,8 @@ public class BubbleManager : MonoBehaviour
         CreateBubbleRow();
         CreateBubbleRow();
         CreateBubbleRow();
+        CreateBubbleRow();
+        CreateBubbleRow();
     }
 
     private void InitializeDictionary()
@@ -78,6 +80,12 @@ public class BubbleManager : MonoBehaviour
         return _gridManager.worldNodes[x, y].transform.position;
     }
 
+    public void SetNode(int x, int y, IBubble bubble)
+    {
+        _bubbles[_gridManager.Nodes[x, y]] = bubble;
+        bubble.BubbleTransform().GetComponent<Bubble>().CurrentNode = _gridManager.Nodes[x, y];
+    }
+
     public void CreateBubble(int x , int y, int data)
     {
         var worldNode = _gridManager.worldNodes[x, y];
@@ -107,6 +115,10 @@ public class BubbleManager : MonoBehaviour
 
     public BubbleSO GetBubbleData(int bubbleData)
     {
+        if (bubbleData <= 2048)
+        {
+            bubbleData = 2048;
+        }
         return bubbleDataDictionary[bubbleData];
     }
 

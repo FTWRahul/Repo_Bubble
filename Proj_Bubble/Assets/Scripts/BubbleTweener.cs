@@ -42,8 +42,22 @@ public class BubbleTweener : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+    public void PopTween()
+    {
+        Sequence mySeq = DOTween.Sequence();
+        Vector3 randomDir = new Vector3(Random.Range(-transform.position.x - 3, transform.position.x + 3), -5, 0);
+        mySeq.Prepend(transform.DOShakePosition(.2f, .5f, 10, 90f));
+        mySeq.Append(transform.DOJump(randomDir, Random.Range(5, 10), 1, 1f).SetEase(Ease.InOutQuad));
+        Destroy(this.gameObject, 1f);
+    }
+
     private void OnDestroy()
     {
         AudioManager.instance.PlayPopSound();
+    }
+
+    public void ShootTween()
+    {
+        
     }
 }

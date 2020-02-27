@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Threading.Tasks;
 
 
-public class MergeHandeler
+public class MergeHandler
 {
     private List<IBubble> _checkedBubbles = new List<IBubble>();
     private List<IBubble> _currentNeighbours = new List<IBubble>();
@@ -12,7 +12,7 @@ public class MergeHandeler
     private IBubble _invoker;
     private int _mergeResult = 0;
 
-    public MergeHandeler(IBubble invoker)
+    public MergeHandler(IBubble invoker)
     {
         _invoker = invoker;
     }
@@ -120,8 +120,12 @@ public class MergeHandeler
 
     private async void StartAfterDelay(IBubble inBubble)
     {
-        await Task.Delay(300);
+        await Task.Delay(400);
         BubbleManager.Instance.GetBubble(inBubble.BubbleCoordinate().x, inBubble.BubbleCoordinate().y).StartMerge();
-
+        await Task.Delay(100);
+        if (_mergeResult <= 2048)
+        {
+            BubbleManager.Instance.GetBubble(inBubble.BubbleCoordinate().x, inBubble.BubbleCoordinate().y).Pop();
+        }
     }
 }

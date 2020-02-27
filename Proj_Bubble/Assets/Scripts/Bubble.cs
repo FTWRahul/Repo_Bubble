@@ -41,27 +41,38 @@ public class Bubble : MonoBehaviour, IBubble
     [ContextMenu("Try Merging for me will ya?")]
     public void StartMerge()
     {
-        MergeHandeler mergeHandeler = new MergeHandeler(this);
-        mergeHandeler.StartCheck();
+        MergeHandler mergeHandler = new MergeHandler(this);
+        mergeHandler.StartCheck();
     }
 
     public void Merge(IBubble bubble)
     {
-        //ClearNode();
+        ClearNode();
         GetComponent<BubbleTweener>().MergeIntoOther(bubble.BubbleTransform().position);
     }
 
-    private void ClearNode()
+    public void ClearNode()
     {
         BubbleManager.Instance.ClearNode(_currentNode.X, _currentNode.Y);
     }
 
+    [ContextMenu("Pop")]
     public void Pop()
     {
-        throw new System.NotImplementedException();
+        List<Vector2Int> neighbours = _currentNode.GetNeighbours();
+        foreach (var bubble in neighbours)
+        {
+            if (BubbleManager.Instance.GetBubble(bubble.x, bubble.y) != null)
+            {
+                BubbleManager.Instance.GetBubble(bubble.x, bubble.y).BubbleTransform().GetComponent<BubbleTweener>().PopTween();
+                BubbleManager.Instance.GetBubble(bubble.x, bubble.y).ClearNode();
+            }
+        }
+        GetComponent<BubbleTweener>().PopTween();
+        ClearNode();
     }
 
-    [ContextMenu("TELL ME YOUR NEIGHBOURS NOW!")]
+    [ContextMenu("Neighbours")]
     public List<IBubble> CheckNeighbours()
     {
         return ReturnListOfNeighbours(_bubbleData.BubbleNumber);
